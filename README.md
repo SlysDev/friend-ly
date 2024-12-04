@@ -1,5 +1,7 @@
 # Friend-ly
 
+## Team Members: Henok A., Rushil A., Elise P., Jeremy K., Medha M.
+
 ## Project Summary
 
 Friend-ly is a student-centered social media app designed to help students, particularly commuters and first-years at the University of Washington, build meaningful, lasting friendships based on shared interests. The app allows students to find matches based on their hobbies, classes, and posts, fostering authentic connections and social engagement.
