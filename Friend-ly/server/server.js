@@ -1,4 +1,11 @@
+const express = require('express')
+const cors = require('cors')
 const { admin } = require('./firebase/firebase_admin.js')
+
+// Initializing express app
+const app = express()
+app.use(express.json());
+app.use(cors());
 
 /*
     Function takes in an access token from a firebase
@@ -22,5 +29,26 @@ async function authUser(token) {
         throw(err)
     }
 }
+/*
+    Handles an auth request for logging in. 
+    @param: Takes in an access token, and authenticates it. 
+    Status Codes: 
+        200: Sucessful auth
+        400: Auth failed
+*/
+app.post('/api/auth', async (req, res) => {
+    const { token } = req.body;
+    console.log(token)
+    try {
+        const result = await authUser(token);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error: 'Authentication failed' });
+    }
+});
 
-module.exports = {authUser}
+app.listen(6262, () => console.log('Server running on port 6262'));
+
+
+
