@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { OAuthProvider } from "firebase/auth"
-import { signInWithPopup } from "firebase/auth"
+// TODO: Right workflow?
+import { OAuthProvider } from "../server/firebase/firebase"
+import { signInWithPopup } from "../server/firebase/firebase"
 import { authUser } from '../server/server';
 
 

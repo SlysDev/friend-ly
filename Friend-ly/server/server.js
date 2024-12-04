@@ -1,4 +1,4 @@
-const { admin } = require('./firebase_admin.js')
+const { admin } = require('./firebase/firebase_admin.js')
 
 /*
     Function takes in an access token from a firebase
