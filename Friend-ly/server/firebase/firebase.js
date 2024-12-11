@@ -1,7 +1,7 @@
 const {initializeApp} = require('firebase/app')
 const {getAuth} = require('firebase/auth')
 
-// TODO: Need to create a file in this folder called firebaseCred and fill these fields in. 
+// TODO: Need to create a file in this folder called firebaseCred.js and fill these fields in. 
 // These fields can be found in Project Settings -> Your Apps in Firebase console. 
 // (You might need to create a web app for the project if it doesn't exist).
 
