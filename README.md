@@ -41,7 +41,7 @@ Many students struggle to form lasting friendships, especially those who spend l
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/username/friend-ly.git
+git clone https://github.com/SlysDev/friend-ly.git
 
 2.	Install dependencies:
 
