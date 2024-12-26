@@ -67,4 +67,11 @@ app.use(express.static('{directory name}'));
 */
 
 // Tells the application to run on the specified port
-app.listen(PORT);
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error(`Failed to start server on port ${PORT}:`, err);
+    process.exit(1);
+  } else {
+    console.log(`Server running on port ${PORT}`);
+  }
+});
