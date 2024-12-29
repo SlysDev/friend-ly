@@ -1,4 +1,5 @@
 import FormTextField from '../components/FormTextField';
+import PrimaryButton from '../components/PrimaryButton';
 
 function LoginView() {
     function handleLogin() {
@@ -8,7 +9,9 @@ function LoginView() {
     <div>
       <h1>Login</h1>
       <LoginForm />
-          <FormTextField props={label="email"} />
+          <FormTextField label="email" />
+          <FormTextField label="password" />
+          <PrimaryButton text="Login" onClick={handleLogin} />
     </div>
   );
 }
