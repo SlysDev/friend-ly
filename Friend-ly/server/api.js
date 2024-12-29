@@ -66,6 +66,18 @@ async function getDBConnection() {
  return db;
 }
 
+/**
+ * Closes the database connection.
+ * @param {sqlite3.Database} db - The database connection.
+ */
+async function closeDbConnection(db) {
+  try {
+    await db.close();
+  } catch (error) {
+    console.error("Failed to close the database connection:", error);
+  }
+}
+
 // Allows us to change the port easily by setting an environment
 // variable. If no environment variable is set, the port will default to 8000
 const PORT = process.env.PORT || DEFAULT_PORT;
