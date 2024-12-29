@@ -106,7 +106,9 @@ async function closeSQLConnection(database) {
  * @returns {JSON[]} - An array of JSON objects representing
  */
 async function queryDatabase(database, query) {
+  // Handle empty case later
   if (query === "") {
+    // Boilerplate for testing now
     query = 'SELECT m.chat_id, m.message_id, m.message_text, m.sent_at, u.username AS sender '+
     'FROM messages m '+
     'JOIN users u ON m.sender_id = u.user_id '+
