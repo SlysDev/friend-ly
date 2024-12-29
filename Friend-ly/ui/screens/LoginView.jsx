@@ -1,17 +1,30 @@
-import FormTextField from '../components/FormTextField';
-import PrimaryButton from '../components/PrimaryButton';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import LoginForm from '../forms/LoginForm';
 
-function LoginView() {
-    function handleLogin() {
-        // Call the login function from the LoginForm component
-    }
+const LoginView = () => {
   return (
-    <div>
-      <h1>Login</h1>
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome Back!</Text>
       <LoginForm />
-          <FormTextField label="email" />
-          <FormTextField label="password" />
-          <PrimaryButton text="Login" onClick={handleLogin} />
-    </div>
+    </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0d1621',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+  },
+});
+
+export default LoginView;

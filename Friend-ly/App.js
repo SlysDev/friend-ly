@@ -1,11 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
+// App.js
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './ui/home'
+import { SafeAreaView } from 'react-native';
+import LoginView from './ui/screens/LoginView';
 
-export default function App() {
+const App = () => {
   return (
-    <Home></Home>
+    <SafeAreaView style={{ flex: 1 }}>
+      <LoginView />
+    </SafeAreaView>
   );
-}
+};
 
+export default App;
