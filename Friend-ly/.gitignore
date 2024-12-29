@@ -35,6 +35,10 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+firebase_credentials.json
+
+firebaseCred.js
+
 # firebase credentials
 server/firebase
 
