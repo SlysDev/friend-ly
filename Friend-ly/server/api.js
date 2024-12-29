@@ -53,6 +53,19 @@ const DEFAULT_PORT = 8000;
 
 // End of the API
 
+// Helper functions:
+/* Establishes a database connection to the database and returns the database object.
+* Any errors that occur should be caught in the function that calls this one.
+* @returns {sqlite3.Database} - The database object for the connection.
+*/
+async function getDBConnection() {
+ const db = await sqlite.open({
+   filename: "FriendlyDatabase.db",
+   driver: sqlite3.Database
+ });
+ return db;
+}
+
 // Allows us to change the port easily by setting an environment
 // variable. If no environment variable is set, the port will default to 8000
 const PORT = process.env.PORT || DEFAULT_PORT;
