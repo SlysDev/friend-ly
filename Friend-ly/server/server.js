@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const { admin } = require('./firebase/firebase_admin.js')
 
+const SERVER_PORT = 6110
 // Initializing express app
 const app = express()
 app.use(express.json());
@@ -48,7 +49,8 @@ app.post('/api/auth', async (req, res) => {
     }
 });
 
-app.listen(6262, () => console.log('Server running on port 6262'));
+
+app.listen(SERVER_PORT, () => console.log('Server running on port ' + SERVER_PORT));
 
 
 
