@@ -39,8 +39,5 @@ firebase_credentials.json
 
 firebaseCred.js
 
-# firebase credentials
-server/firebase
-
 # MacOS stuff
 *.DS_Store
