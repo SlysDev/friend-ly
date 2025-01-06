@@ -42,14 +42,18 @@ Many students struggle to form lasting friendships, especially those who spend l
 
 ```bash
 git clone https://github.com/SlysDev/friend-ly.git
-
+```
 2.	Install dependencies:
-
+```
 npm install
-
-3.	Run the app:
-
-npm start
+```
+3.	Run the app: Navigate to friend-ly/Friend-ly
+```
+npx expo start --web
+```
+Navigate to friend-ly/server
+```
+node server.js
 ```
 
 ## Contributing
