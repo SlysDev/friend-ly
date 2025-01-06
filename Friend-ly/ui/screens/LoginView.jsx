@@ -19,6 +19,9 @@ const LoginView = () => {
           body: JSON.stringify({ token: results.user.accessToken }),
         });
         const data = await response.json();
+        if (!response.ok) {
+          // do something!
+        }
         console.log('Auth response:', data);
         return data;
       } catch (err) {
