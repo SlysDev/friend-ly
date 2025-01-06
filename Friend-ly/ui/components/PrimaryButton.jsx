@@ -1,6 +1,7 @@
 // src/components/Button.js
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import appColors from '../common/app-colors';
 
 const Button = ({ text, onPress }) => {
   return (
@@ -12,11 +13,12 @@ const Button = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#339989',
+    backgroundColor: appColors.UW_Purple,
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
     marginVertical: 10,
+    width: '150px'
   },
   text: {
     color: '#fff',
