@@ -17,6 +17,6 @@ async function compareSentences(text1, text2) {
 }
 
 const sentence1 = "basketball football hiking hiking hiking camping seahawks discord rap music rap music rap music"
-const sentence2 = ""
+const sentence2 = "basketball baseball baseball camping Italy food"
 
 compareSentences(sentence1, sentence2).then(console.log)
