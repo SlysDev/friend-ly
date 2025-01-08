@@ -20,8 +20,14 @@ const app = express();
 const multer = require("multer");
 
 // Importing the sqlite module (if we decide to use it later)
-const sqlite = require("sqlite");
-const sqlite3 = require("sqlite3");
+//const sqlite = require("sqlite");
+//const sqlite3 = require("sqlite3");
+
+// importing mysql2
+const mysql = require('mysql2/promise')
+
+// env variables
+require('dotenv').config()
 
 
 // Middleware (Boilerplate code):
@@ -56,27 +62,31 @@ const DEFAULT_PORT = 8000;
 // Helper functions:
 /* Establishes a database connection to the database and returns the database object.
 * Any errors that occur should be caught in the function that calls this one.
-* @returns {sqlite3.Database} - The database object for the connection.
+* @returns {SQL Database} - The database object for the connection.
 */
-async function getDBConnection() {
- const db = await sqlite.open({
-   filename: "FriendlyDatabase.db",
-   driver: sqlite3.Database
- });
- return db;
-}
 
-/**
- * Closes the database connection.
- * @param {sqlite3.Database} db - The database connection.
- */
-async function closeDbConnection(db) {
+async function getSQLConnection() {
   try {
-    await db.close();
-  } catch (error) {
-    console.error("Failed to close the database connection:", error);
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,    // Replace with your database host
+      user: process.env.DB_USER,// Replace with your database username
+      password: process.env.DB_PASSWORD,// Replace with your database password
+      database: process.env.DB_NAME// Replace with your database name
+    });
+    console.log("Friend-ly DB connected. ")
+    return connection;
+  } catch (err) {
+    console.error('Error connecting to the database:', err.message);
+    throw err;
   }
 }
+
+async function closeSQLConnection(database) {
+  await database.end();
+  console.log("Connection has been closed.")
+}
+
+
 
 // Allows us to change the port easily by setting an environment
 // variable. If no environment variable is set, the port will default to 8000
@@ -92,11 +102,13 @@ app.use(express.static('{directory name}'));
 */
 
 // Tells the application to run on the specified port
-app.listen(PORT, (err) => {
+app.listen(PORT, async (err) => {
   if (err) {
     console.error(`Failed to start server on port ${PORT}:`, err);
     process.exit(1);
   } else {
     console.log(`Server running on port ${PORT}`);
+    let database = await getSQLConnection()
+    closeSQLConnection(database)
   }
 });
