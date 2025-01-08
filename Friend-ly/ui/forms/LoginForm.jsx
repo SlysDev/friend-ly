@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
-import InputField from '../components/InputField';
 import Button from '../components/PrimaryButton';
 import appColors from '../common/app-colors'; // Import your appColors
 
