@@ -16,7 +16,7 @@ async function compareSentences(text1, text2) {
     return cosineComparison(vector1, vector2)
 }
 
-const sentence1 = "basketball football hiking hiking hiking camping seahawks discord rap music rap music rap music"
-const sentence2 = "basketball baseball baseball camping Italy food"
+const sentence1 = "basketball golf swimming"
+const sentence2 = "basketball golf swimming"
 
 compareSentences(sentence1, sentence2).then(console.log)
