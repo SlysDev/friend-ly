@@ -41,3 +41,5 @@ firebaseCred.js
 
 # MacOS stuff
 *.DS_Store
+
+.env
