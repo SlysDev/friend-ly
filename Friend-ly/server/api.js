@@ -150,7 +150,7 @@ app.listen(PORT, async (err) => {
   } else {
     console.log(`Server running on port ${PORT}`);
     database = await getSQLConnection()
-    let query = await queryDatabase(database)
+    let query = await queryDatabase(database, "")
     console.log(query)
     //closeSQLConnection(database)
 
