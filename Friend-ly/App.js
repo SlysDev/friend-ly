@@ -1,16 +1,14 @@
 // App.js
 import React from "react";
-import { SafeAreaView } from "react-native";
-import LoginView from "./ui/screens/LoginView";
-import ChatView from "./ui/screens/ChatView";
+import { NavigationContainer } from "@react-navigation/native";
+import TabNavigator from "./ui/navigation/TabNavigator"; // Import the TabNavigator
 
 const App = () => {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <ChatView />
-        </SafeAreaView>
+        <NavigationContainer>
+            <TabNavigator />
+        </NavigationContainer>
     );
 };
 
 export default App;
-
