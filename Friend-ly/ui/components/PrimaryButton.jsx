@@ -1,30 +1,51 @@
-// src/components/Button.js
-import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import appColors from '../common/app-colors';
+import React from "react";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import appColors from "../common/app-colors";
 
-const Button = ({ text, onPress }) => {
-  return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{text}</Text>
-    </TouchableOpacity>
-  );
+const PrimaryButton = ({
+    text,
+    onPress,
+    width = 180,
+    height = 60,
+    color = appColors.UW_Purple,
+    style,
+}) => {
+    return (
+        <TouchableOpacity
+            style={[
+                styles.button,
+                {
+                    width: width,
+                    height: height,
+                    backgroundColor: color,
+                    borderRadius: height / 2,
+                },
+                style,
+            ]}
+            onPress={onPress}
+        >
+            <Text style={styles.text}>{text}</Text>
+        </TouchableOpacity>
+    );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: appColors.UW_Purple,
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginVertical: 10,
-    width: '150px'
-  },
-  text: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+    button: {
+        justifyContent: "center", // Center content vertically
+        alignItems: "center", // Center content horizontally
+        borderRadius: 5,
+        marginVertical: 10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+    },
+    text: {
+        color: "#fff",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
 });
 
-export default Button;
+export default PrimaryButton;
+

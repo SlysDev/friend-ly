@@ -2,11 +2,24 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import appColors from "../common/app-colors";
 import ChatConversationCard from "../components/ChatConversationCard";
+import MinimalPlusButton from "../components/MinimalPlusButton";
+import PlusButton from "../components/PlusButton";
+import PrimaryButton from "../components/PrimaryButton";
 
 const ChatView = () => {
+    let addConversation = () => {
+        // TODO: Implement addConversation functionality
+    };
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Messages</Text>
+            <View style={styles.header}>
+                <Text style={styles.title}>Messages</Text>
+                <PlusButton
+                    color={appColors.UW_Purple}
+                    style={styles.plusButton}
+                    onPress={addConversation}
+                />
+            </View>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <ChatConversationCard
                     senderName="Jeremy"
@@ -41,15 +54,23 @@ const ChatView = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: appColors.White, // Matches app color scheme
+        backgroundColor: appColors.White,
         paddingHorizontal: 10,
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center", // Center the title by default
+        marginVertical: 15,
     },
     title: {
         fontSize: 24,
         fontWeight: "bold",
-        color: appColors.Black, // Text color updated to match app color scheme
-        marginVertical: 15,
-        textAlign: "center",
+        color: appColors.Black,
+    },
+    plusButton: {
+        position: "absolute", // Detach from the layout flow
+        right: 10, // Align to the right
     },
     scrollContainer: {
         paddingBottom: 20,
