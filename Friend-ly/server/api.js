@@ -52,6 +52,8 @@ const SERVER_ERROR_CODE = 500;
 const USER_ERROR_CODE = 400;
 const DEFAULT_PORT = 8000;
 
+let database;
+
 // Start of the API
 
 // {fill out after dicussing with the teamwho will do what}
@@ -119,6 +121,12 @@ async function queryDatabase(database, query) {
   return results;
 }
 
+app.get('/chats/:chat_id', async (req, res) => {
+  const id = req.params.chat_id
+  const [results, fields] = await database.execute('SELECT * FROM messages WHERE chat_id = ?', [id]);
+  res.json(results)
+})
+
 
 
 // Allows us to change the port easily by setting an environment
@@ -141,7 +149,7 @@ app.listen(PORT, async (err) => {
     process.exit(1);
   } else {
     console.log(`Server running on port ${PORT}`);
-    let database = await getSQLConnection()
+    database = await getSQLConnection()
     let query = await queryDatabase(database)
     console.log(query)
     //closeSQLConnection(database)
