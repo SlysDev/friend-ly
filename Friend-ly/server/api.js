@@ -65,6 +65,10 @@ const DEFAULT_PORT = 8000;
 * @returns {SQL Database} - The database object for the connection.
 */
 
+/**
+ * Establishes a server connection and returns an instance of it.
+ * @returns {SQLConnection} - A SQL Connection
+ */
 async function getSQLConnection() {
   try {
     const connection = await mysql.createConnection({
@@ -81,19 +85,35 @@ async function getSQLConnection() {
   }
 }
 
+/**
+ * Closes a connection to a server
+ * @param {SQLConnection} database - A connection to a database
+ */
 async function closeSQLConnection(database) {
   await database.end();
   console.log("Connection has been closed.")
 }
 
-async function queryDatabase(database) {
-  const [results, fields] = await database.execute(
-    'SELECT m.chat_id, m.message_id, m.message_text, m.sent_at, u.username AS sender '+
+// TODO: Implement a status code for the type of query was executed and the
+// code helps with client of the function to understand which type of data
+// format to get back (e.g a select query will return a JSON array while a
+// Insert into query will return other information)
+
+/**
+ * Executes a SQL query on the connection passed to the function
+ * @param {SQLConnection} database - A connection to our database
+ * @param {String} query - A SQL query in string format
+ * @returns {JSON[]} - An array of JSON objects representing
+ */
+async function queryDatabase(database, query) {
+  if (query === "") {
+    query = 'SELECT m.chat_id, m.message_id, m.message_text, m.sent_at, u.username AS sender '+
     'FROM messages m '+
     'JOIN users u ON m.sender_id = u.user_id '+
     'WHERE m.chat_id = 2 '+
-    'ORDER BY m.sent_at ASC; '
-  );
+    'ORDER BY m.sent_at ASC; ';
+  }
+  const [results, fields] = await database.execute(query);
   return results;
 }
 

@@ -35,6 +35,11 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# firebase credentials
+server/firebase
+
+# MacOS stuff
+*.DS_Store
 .env
 
 firebase_credentials.json
