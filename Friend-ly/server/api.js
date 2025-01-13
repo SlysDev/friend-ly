@@ -86,6 +86,17 @@ async function closeSQLConnection(database) {
   console.log("Connection has been closed.")
 }
 
+async function queryDatabase(database) {
+  const [results, fields] = await database.execute(
+    'SELECT m.chat_id, m.message_id, m.message_text, m.sent_at, u.username AS sender '+
+    'FROM messages m '+
+    'JOIN users u ON m.sender_id = u.user_id '+
+    'WHERE m.chat_id = 2 '+
+    'ORDER BY m.sent_at ASC; '
+  );
+  return results;
+}
+
 
 
 // Allows us to change the port easily by setting an environment
@@ -109,6 +120,9 @@ app.listen(PORT, async (err) => {
   } else {
     console.log(`Server running on port ${PORT}`);
     let database = await getSQLConnection()
-    closeSQLConnection(database)
+    let query = await queryDatabase(database)
+    console.log(query)
+    //closeSQLConnection(database)
+
   }
 });
