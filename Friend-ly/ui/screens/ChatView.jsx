@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import appColors from "../common/app-colors";
 import ChatConversationCard from "../components/ChatConversationCard";
 import MinimalPlusButton from "../components/MinimalPlusButton";
@@ -11,7 +11,7 @@ const ChatView = () => {
         // TODO: Implement addConversation functionality
     };
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Messages</Text>
                 <PlusButton
@@ -47,7 +47,7 @@ const ChatView = () => {
                     timestamp="Sunday"
                 />
             </ScrollView>
-        </View>
+        </SafeAreaView>
     );
 };
 

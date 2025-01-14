@@ -1,40 +1,42 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import LoginForm from "../forms/LoginForm";
 import { GoogleAuthProvider } from "firebase/auth";
 import { signIn } from "firebase/auth";
 import { auth } from "../../server/firebase/firebase";
 import appColors from "../common/app-colors"; // Import your appColors
 
-const LoginView = () => {
+const LoginView = ({ navigation }) => {
     const microsoftProvider = new GoogleAuthProvider();
 
     const authLogin = async () => {
-        try {
-            const results = await signInWithRedirect(auth, microsoftProvider);
-            try {
-                const response = await fetch("http://localhost:6262/api/auth", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ token: results.user.accessToken }),
-                });
-                const data = await response.json();
-                console.log("Auth response:", data);
-                return data;
-            } catch (err) {
-                console.error("Error during authentication:", err);
-            }
-        } catch (err) {
-            throw err;
-        }
+        navigation.navigate("Chat");
+        // TODO: Implement mobile-friendly login popup
+        // try {
+        //     const results = await signInWithRedirect(auth, microsoftProvider);
+        //     try {
+        //         const response = await fetch("http://localhost:6262/api/auth", {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //             body: JSON.stringify({ token: results.user.accessToken }),
+        //         });
+        //         const data = await response.json();
+        //         console.log("Auth response:", data);
+        //         return data;
+        //     } catch (err) {
+        //         console.error("Error during authentication:", err);
+        //     }
+        // } catch (err) {
+        //     throw err;
+        // }
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Welcome Back!</Text>
             <View style={{ height: 40 }} />
             <LoginForm onSubmit={authLogin} />
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -55,4 +57,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginView;
-
