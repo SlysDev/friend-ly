@@ -1,5 +1,7 @@
 # Friend-ly
 
+## Team Members: Henok A., Rushil A., Elise P., Jeremy K., Medha M.
+
 ## Project Summary
 
 Friend-ly is a student-centered social media app designed to help students, particularly commuters and first-years at the University of Washington, build meaningful, lasting friendships based on shared interests. The app allows students to find matches based on their hobbies, classes, and posts, fostering authentic connections and social engagement.
@@ -39,15 +41,19 @@ Many students struggle to form lasting friendships, especially those who spend l
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/username/friend-ly.git
-
+git clone https://github.com/SlysDev/friend-ly.git
+```
 2.	Install dependencies:
-
+```
 npm install
-
-3.	Run the app:
-
-npm start
+```
+3.	Run the app: Navigate to friend-ly/Friend-ly
+```
+npx expo start --web
+```
+Navigate to friend-ly/server
+```
+node server.js
 ```
 
 ## Contributing
