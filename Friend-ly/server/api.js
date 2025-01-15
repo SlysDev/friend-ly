@@ -121,11 +121,39 @@ async function queryDatabase(database, query) {
   return results;
 }
 
+/**
+ * Returns back all chat history for a single chat
+ */
 app.get('/chats/:chat_id', async (req, res) => {
   const id = req.params.chat_id
   const [results, fields] = await database.execute('SELECT * FROM messages WHERE chat_id = ?', [id]);
   res.json(results)
-})
+});
+
+// Gets a single users information
+app.get('/users/:id', async function(req, res) {
+  let userId = req.params.id;
+  let query = "SELECT * FROM users WHERE user_id = ?;";
+
+  try {
+    const resultArr = await database.execute(query, [userId]);
+    /**
+     * This is the actual result set of the query.
+     *     If the query is a SELECT, rows will be an array of objects where
+     * each object represents a row.
+     * If the query is an INSERT, UPDATE, or DELETE, rows will contain
+     * metadata, such as affectedRows and insertId.
+     */
+    const records = resultArr[0];
+    const metaData = resultArr[1];
+
+    // Send back users information to frontend
+    res.json(records);
+  } catch (error) {
+    res.type("text").status(SERVER_ERROR_CODE)
+      .send("An error occurred on the server. Try again later.");
+  }
+});
 
 
 
