@@ -1,0 +1,6 @@
+//GET http://localhost:8000/chats/2
+
+
+//GET http://localhost:8000/users/1/getLastMessageHistory
+
+GET http://localhost:8000/users

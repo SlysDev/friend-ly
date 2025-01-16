@@ -1,11 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './ui/home'
+// App.js
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import TabNavigator from "./ui/navigation/TabNavigator"; // Import the TabNavigator
 
-export default function App() {
-  return (
-    <Home></Home>
-  );
-}
+const App = () => {
+    return (
+        <NavigationContainer>
+            <TabNavigator />
+        </NavigationContainer>
+    );
+};
 
+export default App;
