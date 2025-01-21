@@ -10,6 +10,14 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const PostCard = ({ user, timestamp, image, caption, likes, comments }) => {
+    let likePost = () => {
+        // TODO: Implement likePost functionality
+    };
+
+    let commentPost = () => {
+        // TODO: Implement commentPost functionality
+    };
+
     return (
         <View style={styles.card}>
             {/* Header: User Info */}
@@ -144,3 +152,17 @@ const styles = StyleSheet.create({
 });
 
 export default PostCard;
+
+// A good example of how to use this component:
+// <PostCard
+// user={{
+// username: "Jane Doe",
+// profilePic:
+// "https://randomuser.me/api/portraits/women/1.jpg",
+// }}
+// timestamp="2 hours ago"
+// image="https://placehold.co/600x300/png"
+// caption="This is an example post with all props provided."
+// likes={34}
+// comments={12}
+// />
