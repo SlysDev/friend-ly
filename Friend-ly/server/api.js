@@ -121,11 +121,68 @@ async function queryDatabase(database, query) {
   return results;
 }
 
+/**
+ * Returns back all chat history for a single chat
+ */
 app.get('/chats/:chat_id', async (req, res) => {
   const id = req.params.chat_id
-  const [results, fields] = await database.execute('SELECT * FROM messages WHERE chat_id = ?', [id]);
+  const [results, fields] = await database.execute(
+    'SELECT * FROM messages WHERE chat_id = ?', [id]);
   res.json(results)
-})
+});
+
+// Gets a single users information
+app.get('/users/:id', async function(req, res) {
+  let userId = req.params.id;
+  let query = "SELECT * FROM users WHERE user_id = ?;";
+
+  try {
+    const resultArr = await database.execute(query, [userId]);
+    /**
+     * This is the actual result set of the query.
+     *     If the query is a SELECT, rows will be an array of objects where
+     * each object represents a row.
+     * If the query is an INSERT, UPDATE, or DELETE, rows will contain
+     * metadata, such as affectedRows and insertId.
+     */
+    const records = resultArr[0];
+    const metaData = resultArr[1];
+
+    // Send back users information to frontend
+    res.json(records);
+  } catch (error) {
+    res.type("text").status(SERVER_ERROR_CODE)
+      .send("An error occurred on the server. Try again later.");
+  }
+});
+
+/**
+ * Sets the most recent message seen by the specified user in a particular
+ * conversation.
+ */
+app.post('/seen/updateSeen', async function (req, res) {
+  let message_id = req.body.message_id;
+  let user = req.body.user_id;
+  let chat = req.body.chat_id;
+  let query = "UPDATE seen SET message_id = ? WHERE user_id = ? AND chat_id = ?;";
+
+  if (message_id && user && chat) {
+    try {
+      const resultArr = await database.execute(query, [message_id, user, chat]);
+      const records = resultArr[0];
+      const metaData = resultArr[1];
+
+      // Later write code that sends back correct part of the metaData.
+      res.type("text").status(SUCCESS_CODE)
+          .send("Successfully set the most recent message for specified user");
+    } catch (error) {
+
+    }
+  } else {
+    res.type("text").status(USER_ERROR_CODE)
+      .send("The username, ")
+  }
+});
 
 app.get('/users/:user_id/getLastMessageHistory', async (req, res) => {
   const user_id = req.params.user_id
