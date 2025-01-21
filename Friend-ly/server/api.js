@@ -230,38 +230,6 @@ app.get('/users', async (req, res) => {
 })
 
 
-app.get('/users/:user_id/getLastMessageHistory', async (req, res) => {
-  const user_id = req.params.user_id
-  const [results, fields] = await database.execute(
-    'SELECT m.chat_id, m.message_text, m.sent_at, m.sender_id ' + 
-    'FROM messages m ' + 
-    'WHERE m.message_id IN ( ' + 
-    '   SELECT MAX(sub_m.message_id) ' + 
-    '   FROM messages sub_m ' + 
-    '   GROUP BY sub_m.chat_id ' + 
-    ')' + 
-    'AND m.chat_id IN ( ' + 
-    '   SELECT c.chat_id ' + 
-    '   FROM chatMembers c ' + 
-    '   WHERE c.user_id = ? ' + 
-    ')' + 
-    'ORDER BY m.sent_at DESC', [user_id]
-  )
-  res.json(results)
-})
-
-app.get('/users', async (req, res) => {
-  const [results, fields] = await database.execute('SELECT * FROM users');
-  res.json(results);
-})
-
-
-app.get('/users', async (req, res) => {
-  const [results, fields] = await database.execute('SELECT * FROM users');
-  res.json(results);
-})
-
-
 // Allows us to change the port easily by setting an environment
 // variable. If no environment variable is set, the port will default to 8000
 const PORT = process.env.PORT || DEFAULT_PORT;
