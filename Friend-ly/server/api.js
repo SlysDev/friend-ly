@@ -229,6 +229,26 @@ app.get('/users', async (req, res) => {
   res.json(results);
 })
 
+app.post('/chats/addUser', async (req, res) => {
+  let chat_id = req.body.chat_id
+  let user_ids = req.body.user_ids
+  let query = 'INSERT INTO chatMembers (chat_id, user_id) VALUES (?, ?)'
+  for (let i = 0; i < user_ids.length; i++) {
+    let user_id = user_ids[i]
+    try {
+      const resultArr = await database.execute(query, [chat_id, user_id]);
+      const records = resultArr[0];
+      const metaData = resultArr[1];
+  
+      // Later write code that sends back correct part of the metaData.
+      res.type("text").status(SUCCESS_CODE)
+          .send("Successfully posted added a new user to the chat.");
+    } catch (error) {
+      res.type("text").status(USER_ERROR_CODE).send("Add new user failed.")
+    }
+  }
+})
+
 
 // Allows us to change the port easily by setting an environment
 // variable. If no environment variable is set, the port will default to 8000
