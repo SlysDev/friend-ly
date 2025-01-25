@@ -204,6 +204,9 @@ app.post('/users/:id/:chat_id/newMessage', async function (req, res) {
 
 })
 
+/**
+ * Gets the last message for every chat a certain user is in. 
+ */
 app.get('/users/:user_id/getLastMessageHistory', async (req, res) => {
   const user_id = req.params.user_id
   const [results, fields] = await database.execute(
@@ -229,9 +232,18 @@ app.get('/users', async (req, res) => {
   res.json(results);
 })
 
+/**
+ * Adds a new user (or a list of users) to a given chat. 
+ * User ids must be Strings. 
+ */
 app.post('/chats/addUser', async (req, res) => {
   let chat_id = req.body.chat_id
   let user_ids = req.body.user_ids
+
+  if (!list.every(item => typeof item === "string")) {
+    res.type("text").status(USER_ERROR_CODE).send("Not all user_ids are Strings.")
+  }
+
   let query = 'INSERT INTO chatMembers (chat_id, user_id) VALUES (?, ?)'
   for (let i = 0; i < user_ids.length; i++) {
     let user_id = user_ids[i]
