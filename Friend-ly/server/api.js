@@ -131,6 +131,15 @@ app.get('/chats/:chat_id', async (req, res) => {
   res.json(results)
 }); 
 
+app.get('/chats/:chat_id/users', async(req, res) => {
+  const chat_id = req.params.chat_id
+  const [results, fields] = await database.execute(
+    'SELECT user_id FROM chatMembers WHERE chat_id = ?', [chat_id]);
+  res.json(results);
+})
+
+
+
 // Gets a single users information
 app.get('/users/:id', async function(req, res) {
   let userId = req.params.id;
@@ -238,9 +247,7 @@ app.get('/users', async (req, res) => {
  * User ids must be Strings. 
  */
 app.post('/chats/addUser', async (req, res) => {
-  const chat_id = req.body.chat_id;
-  const user_ids = req.body.user_ids;
-
+  const { chat_id, user_ids } = req.body
   try {
     const result = await addUser(chat_id, user_ids);
     if (result.success) {
@@ -249,16 +256,16 @@ app.post('/chats/addUser', async (req, res) => {
       res.type("text").status(400).send(result.message);
     }
   } catch (error) {
-    res.type("text").status(500).send("An unexpected error occurred.");
+    res.type("text").status(500).send("Couldn't add a new user.");
   }
   
 })
 
 
 async function addUser(chat_id, user_ids) {
-  if (!user_ids.every(item => typeof item === "string")) {
-    return { success: false, message: "Not all user_ids are strings." };
-  }
+  /*if (!user_ids.every(item => typeof item === "number")) {
+    return { success: false, message: "Not all user_ids are integers." };
+  }*/
 
   let query = 'INSERT INTO chatMembers (chat_id, user_id) VALUES (?, ?)'
   for (let i = 0; i < user_ids.length; i++) {
