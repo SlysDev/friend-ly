@@ -232,16 +232,32 @@ app.get('/users', async (req, res) => {
   res.json(results);
 })
 
+
 /**
  * Adds a new user (or a list of users) to a given chat. 
  * User ids must be Strings. 
  */
 app.post('/chats/addUser', async (req, res) => {
-  let chat_id = req.body.chat_id
-  let user_ids = req.body.user_ids
+  const chat_id = req.body.chat_id;
+  const user_ids = req.body.user_ids;
 
-  if (!list.every(item => typeof item === "string")) {
-    res.type("text").status(USER_ERROR_CODE).send("Not all user_ids are Strings.")
+  try {
+    const result = await addUser(chat_id, user_ids);
+    if (result.success) {
+      res.type("text").status(200).send(result.message);
+    } else {
+      res.type("text").status(400).send(result.message);
+    }
+  } catch (error) {
+    res.type("text").status(500).send("An unexpected error occurred.");
+  }
+  
+})
+
+
+async function addUser(chat_id, user_ids) {
+  if (!user_ids.every(item => typeof item === "string")) {
+    return { success: false, message: "Not all user_ids are strings." };
   }
 
   let query = 'INSERT INTO chatMembers (chat_id, user_id) VALUES (?, ?)'
@@ -251,15 +267,13 @@ app.post('/chats/addUser', async (req, res) => {
       const resultArr = await database.execute(query, [chat_id, user_id]);
       const records = resultArr[0];
       const metaData = resultArr[1];
-  
       // Later write code that sends back correct part of the metaData.
-      res.type("text").status(SUCCESS_CODE)
-          .send("Successfully posted added a new user to the chat.");
     } catch (error) {
-      res.type("text").status(USER_ERROR_CODE).send("Add new user failed.")
+      return { success: false, message: "Adding a new user failed"}
     }
   }
-})
+  return { success: true, message: "Successfully posted new users to the chat."}
+}
 
 
 // Allows us to change the port easily by setting an environment
