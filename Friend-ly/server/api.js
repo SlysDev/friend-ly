@@ -204,6 +204,39 @@ app.post('/users/:id/:chat_id/newMessage', async function (req, res) {
 
 })
 
+app.post('/chats/newConversation', async (req, res) => {
+  let chat_name = req.body.chat_name
+  let profile_pic = req.body.profile_pic
+  let user_ids = req.body.user_ids
+  console.log(user_ids)
+  let insertQuery = 'INSERT INTO chats(chat_name, profile_picture) VALUES (?, ?)'
+
+  try {
+    const resultArr = await database.execute(insertQuery, [chat_name, profile_pic])
+    const records = resultArr[0];
+    const metaData = resultArr[1];
+    let chat_id = records.insertId;
+
+
+    // logic of adding users
+  
+    let query = 'INSERT INTO chatMembers (chat_id, user_id) VALUES (?, ?)'
+    for (let i = 0; i < user_ids.length; i++) {
+      let user_id = user_ids[i]
+      console.log(user_id)
+
+      const resultArr = await database.execute(query, [chat_id, user_id]);
+      const records = resultArr[0];
+      const metaData = resultArr[1];
+    }
+
+    res.type("text").status(SUCCESS_CODE)
+        .send("Successfully posted a new chat in chats table");
+  } catch (error) {
+    res.type("text").status(USER_ERROR_CODE).send("Post new chats failed.")
+  }
+})  
+
 app.get('/users/:user_id/getLastMessageHistory', async (req, res) => {
   const user_id = req.params.user_id
   const [results, fields] = await database.execute(
