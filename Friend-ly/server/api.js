@@ -131,6 +131,15 @@ app.get('/chats/:chat_id', async (req, res) => {
   res.json(results)
 }); 
 
+app.get('/chats/:chat_id/users', async(req, res) => {
+  const chat_id = req.params.chat_id
+  const [results, fields] = await database.execute(
+    'SELECT user_id FROM chatMembers WHERE chat_id = ?', [chat_id]);
+  res.json(results);
+})
+
+
+
 // Gets a single users information
 app.get('/users/:id', async function(req, res) {
   let userId = req.params.id;
@@ -204,6 +213,9 @@ app.post('/users/:id/:chat_id/newMessage', async function (req, res) {
 
 })
 
+/**
+ * Gets the last message for every chat a certain user is in. 
+ */
 app.get('/users/:user_id/getLastMessageHistory', async (req, res) => {
   const user_id = req.params.user_id
   const [results, fields] = await database.execute(
@@ -228,6 +240,47 @@ app.get('/users', async (req, res) => {
   const [results, fields] = await database.execute('SELECT * FROM users');
   res.json(results);
 })
+
+
+/**
+ * Adds a new user (or a list of users) to a given chat. 
+ * User ids must be Strings. 
+ */
+app.post('/chats/addUser', async (req, res) => {
+  const { chat_id, user_ids } = req.body
+  try {
+    const result = await addUser(chat_id, user_ids);
+    if (result.success) {
+      res.type("text").status(200).send(result.message);
+    } else {
+      res.type("text").status(400).send(result.message);
+    }
+  } catch (error) {
+    res.type("text").status(500).send("Couldn't add a new user.");
+  }
+  
+})
+
+
+async function addUser(chat_id, user_ids) {
+  /*if (!user_ids.every(item => typeof item === "number")) {
+    return { success: false, message: "Not all user_ids are integers." };
+  }*/
+
+  let query = 'INSERT INTO chatMembers (chat_id, user_id) VALUES (?, ?)'
+  for (let i = 0; i < user_ids.length; i++) {
+    let user_id = user_ids[i]
+    try {
+      const resultArr = await database.execute(query, [chat_id, user_id]);
+      const records = resultArr[0];
+      const metaData = resultArr[1];
+      // Later write code that sends back correct part of the metaData.
+    } catch (error) {
+      return { success: false, message: "Adding a new user failed"}
+    }
+  }
+  return { success: true, message: "Successfully posted new users to the chat."}
+}
 
 
 // Allows us to change the port easily by setting an environment
