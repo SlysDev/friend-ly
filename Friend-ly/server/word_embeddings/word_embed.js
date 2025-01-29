@@ -13,10 +13,10 @@ async function compareSentences(text1, text2) {
     const embeddings = await model.embed([text1, text2])
     const vector1 = embeddings.arraySync()[0]
     const vector2 = embeddings.arraySync()[1]
-    return cosineComparison(vector1, vector2)
+    return Math.round(cosineComparison(vector1, vector2) * 100) + "%"
 }
 
-const sentence1 = "basketball golf swimming"
-const sentence2 = "basketball golf swimming"
+const sentence1 = "european football"
+const sentence2 = "soccer"
 
 compareSentences(sentence1, sentence2).then(console.log)
