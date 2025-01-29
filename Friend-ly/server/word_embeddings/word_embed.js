@@ -17,6 +17,6 @@ async function compareSentences(text1, text2) {
 }
 
 const sentence1 = "european football"
-const sentence2 = "soccer"
+const sentence2 = "european football"
 
 compareSentences(sentence1, sentence2).then(console.log)
