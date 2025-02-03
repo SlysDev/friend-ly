@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "^4.0.0",
+    "@react-native-google-signin/google-signin": "^13.1.0",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.1.1",
@@ -18,9 +19,9 @@
     "dotenv": "^16.4.7",
     "expo": "~52.0.11",
     "expo-status-bar": "~2.0.0",
+    "express": "^4.21.2",
     "firebase": "^11.0.2",
     "firebase-admin": "^13.0.1",
-    "express": "^4.21.2",
     "fs": "^0.0.1-security",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.12.0",
